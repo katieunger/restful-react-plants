@@ -16,5 +16,5 @@ export const fetchSpecies = () => async dispatch => {
       }
     );
 
-    dispatch({ type: FETCH_SPECIES, payload: { data: response.data, total: response.headers.total }});
+    dispatch({ type: FETCH_SPECIES, payload: { data: response.data, totalPages: response.headers['total-pages'] }});
 }

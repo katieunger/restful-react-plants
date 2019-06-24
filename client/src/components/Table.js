@@ -13,7 +13,7 @@ class MyTable extends React.Component {
     renderPlants() {
         console.log('in renderPlants')
         console.log(this.props);
-        return this.props.species.map(obj => {
+        return this.props.data.map(obj => {
             return (
                 <Table.Row key={obj.id}>
                     <Table.Cell>{obj.scientific_name}</Table.Cell>
@@ -25,17 +25,17 @@ class MyTable extends React.Component {
     }
     
     render() {
-        // if (this.props.species.length === 0) {
-        //     return (
-        //         <React.Fragment>
-        //         <Segment>
-        //             <Loader active>
-        //                 Loading...
-        //             </Loader>
-        //         </Segment>
-        //         </React.Fragment>
-        //     );
-        // }
+        if (!this.props.data) {
+            return (
+                <React.Fragment>
+                <Segment>
+                    <Loader active>
+                        Loading...
+                    </Loader>
+                </Segment>
+                </React.Fragment>
+            );
+        }
         return (
             <Table celled>
                 <Table.Header>
@@ -53,7 +53,7 @@ class MyTable extends React.Component {
                 <Table.Footer>
                 <Table.Row>
                     <Table.HeaderCell colSpan='3'>
-                        <Pagination totalPages={5}>
+                        <Pagination totalPages={this.props.totalPages}>
                         </Pagination>
                     </Table.HeaderCell>
                 </Table.Row>
@@ -67,9 +67,9 @@ class MyTable extends React.Component {
 const mapStateToProps = (state) => {
     console.log('mapStateToProps');
     console.log(state);
-    return { 
-        species: Object.values(state.species),
-        total: state.species.total
+    return {
+        data: state.species.data,
+        totalPages: state.species.totalPages
     };
 };
 
