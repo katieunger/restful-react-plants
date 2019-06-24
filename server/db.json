@@ -1,0 +1,32 @@
+{
+    "teas": [
+        {
+            "type": "black",
+            "name": "English Breakfast"
+        },
+        {
+            "type": "black",
+            "name": "Earl Grey"
+        },
+        {
+            "type": "green",
+            "name": "Sencha"
+        },
+        {
+            "type": "green",
+            "name": "Hojicha"
+        },
+        {
+            "type": "green",
+            "name": "Genmaicha"
+        },
+        {
+            "type": "oolong",
+            "name": "Oolong"
+        },
+        {
+            "type": "white",
+            "name": "Silver Needle"
+        }
+    ]
+}
