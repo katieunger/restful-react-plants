@@ -1,27 +1,41 @@
 import React from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react';
+import { Menu, Table, Loader, Segment, Pagination } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchSpecies } from '../actions';
 
 class MyTable extends React.Component {
     componentDidMount() {
         this.props.fetchSpecies();
+        console.log('componentDidMount');
+        console.log(this.props);
     }
 
     renderPlants() {
-        return this.props.species.map(specie => {
+        console.log('in renderPlants')
+        console.log(this.props);
+        return this.props.species.map(obj => {
             return (
-                <Table.Row key={specie.id}>
-                    <Table.Cell>{specie.scientific_name}</Table.Cell>
-                    <Table.Cell>{specie.family_common_name}</Table.Cell>
-                    <Table.Cell>{specie.common_name}</Table.Cell>
+                <Table.Row key={obj.id}>
+                    <Table.Cell>{obj.scientific_name}</Table.Cell>
+                    <Table.Cell>{obj.family_common_name}</Table.Cell>
+                    <Table.Cell>{obj.common_name}</Table.Cell>
                 </Table.Row>
             );
         })
     }
     
     render() {
-        console.log(this.props);
+        // if (this.props.species.length === 0) {
+        //     return (
+        //         <React.Fragment>
+        //         <Segment>
+        //             <Loader active>
+        //                 Loading...
+        //             </Loader>
+        //         </Segment>
+        //         </React.Fragment>
+        //     );
+        // }
         return (
             <Table celled>
                 <Table.Header>
@@ -39,18 +53,8 @@ class MyTable extends React.Component {
                 <Table.Footer>
                 <Table.Row>
                     <Table.HeaderCell colSpan='3'>
-                    <Menu floated='right' pagination>
-                        <Menu.Item as='a' icon>
-                        <Icon name='chevron left' />
-                        </Menu.Item>
-                        <Menu.Item as='a'>1</Menu.Item>
-                        <Menu.Item as='a'>2</Menu.Item>
-                        <Menu.Item as='a'>3</Menu.Item>
-                        <Menu.Item as='a'>4</Menu.Item>
-                        <Menu.Item as='a' icon>
-                        <Icon name='chevron right' />
-                        </Menu.Item>
-                    </Menu>
+                        <Pagination totalPages={5}>
+                        </Pagination>
                     </Table.HeaderCell>
                 </Table.Row>
                 </Table.Footer>
@@ -61,8 +65,11 @@ class MyTable extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('mapStateToProps');
+    console.log(state);
     return { 
         species: Object.values(state.species),
+        total: state.species.total
     };
 };
 
