@@ -14,7 +14,7 @@ class MyTable extends React.Component {
                 <Table.Row key={specie.id}>
                     <Table.Cell>{specie.scientific_name}</Table.Cell>
                     <Table.Cell>{specie.family_common_name}</Table.Cell>
-                    <Table.Cell>Cell</Table.Cell>
+                    <Table.Cell>{specie.common_name}</Table.Cell>
                 </Table.Row>
             );
         })
@@ -27,8 +27,8 @@ class MyTable extends React.Component {
                 <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>Scientific Name</Table.HeaderCell>
-                    <Table.HeaderCell>Header</Table.HeaderCell>
-                    <Table.HeaderCell>Header</Table.HeaderCell>
+                    <Table.HeaderCell>Family Common Name</Table.HeaderCell>
+                    <Table.HeaderCell>Common Name</Table.HeaderCell>
                 </Table.Row>
                 </Table.Header>
     
