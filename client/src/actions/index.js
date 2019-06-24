@@ -9,9 +9,12 @@ export const fetchPlants = () => async dispatch => {
 };
 
 export const fetchSpecies = () => async dispatch => {
-    const response = await trefle.get('/api/species');
+    const response = await trefle.get('/api/species', {
+        params: {
+          complete_data: true
+        }
+      }
+    );
 
-    const filteredResponse = _.filter(response.data, 'common_name');
-
-    dispatch({ type: FETCH_SPECIES, payload: filteredResponse });
+    dispatch({ type: FETCH_SPECIES, payload: response.data });
 }
