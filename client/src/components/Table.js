@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Table, Loader, Segment, Pagination } from 'semantic-ui-react';
+import { Icon, Table, Loader, Segment, Pagination, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchSpecies } from '../actions';
 
@@ -25,6 +25,16 @@ class MyTable extends React.Component {
     }
     
     render() {
+        if (this.props.error) {
+            return (
+                <React.Fragment>
+                <Message negative>
+                    <Message.Header>Error</Message.Header>
+                    <p>{this.props.error}</p>
+                </Message>
+                </React.Fragment>
+            );
+        }
         if (!this.props.data) {
             return (
                 <React.Fragment>
@@ -55,7 +65,11 @@ class MyTable extends React.Component {
                     <Table.HeaderCell colSpan='3'>
                         <Pagination
                             totalPages={this.props.totalPages}
-                            ellipsisItem={null}
+                            ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                            firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                            lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                            prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                            nextItem={{ content: <Icon name='angle right' />, icon: true }}
                         >
                         </Pagination>
                     </Table.HeaderCell>
@@ -72,7 +86,8 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         data: state.species.data,
-        totalPages: state.species.totalPages
+        totalPages: state.species.totalPages,
+        error: state.species.error
     };
 };
 

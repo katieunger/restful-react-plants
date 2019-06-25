@@ -9,7 +9,7 @@ export default (state = {}, action) => {
         case ERROR:
             return { 
                 ...state,
-                [action.type]: action.payload
+                error: action.payload
             }
         default:
             return state;
