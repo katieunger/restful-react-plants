@@ -53,7 +53,10 @@ class MyTable extends React.Component {
                 <Table.Footer>
                 <Table.Row>
                     <Table.HeaderCell colSpan='3'>
-                        <Pagination totalPages={this.props.totalPages}>
+                        <Pagination
+                            totalPages={this.props.totalPages}
+                            ellipsisItem={null}
+                        >
                         </Pagination>
                     </Table.HeaderCell>
                 </Table.Row>

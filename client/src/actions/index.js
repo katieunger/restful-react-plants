@@ -1,5 +1,7 @@
 import trefle from '../api/trefle';
-import { FETCH_PLANTS, FETCH_SPECIES } from './types';
+import { FETCH_PLANTS, FETCH_SPECIES, ERROR } from './types';
+
+// TODO: Add error handling for failed requests!
 
 export const fetchPlants = () => async dispatch => {
     const response = await trefle.get('/api/plants');
@@ -8,13 +10,17 @@ export const fetchPlants = () => async dispatch => {
 };
 
 export const fetchSpecies = () => async dispatch => {
-    const response = await trefle.get('/api/species', {
-        params: {
-          complete_data: true,
-          //page: page
-        }
-      }
-    );
+    try {
+        const response = await trefle.get('/api/species', {
+            params: {
+                complete_data: true,
+                //page: page
+            }
+        })
 
-    dispatch({ type: FETCH_SPECIES, payload: { data: response.data, totalPages: response.headers['total-pages'] }});
+        dispatch({ type: FETCH_SPECIES, payload: { data: response.data, totalPages: response.headers['total-pages'] }});
+    } catch(e) {
+        dispatch({ type: ERROR, payload: e.message});
+    }    
 }
+  
