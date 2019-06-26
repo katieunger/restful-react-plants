@@ -1,36 +1,37 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { setActiveItem } from '../actions';
 
 class MyMenu extends React.Component {
-    state = {
-        activeItem: 'species'
-    };
+    componentDidMount() {
+        this.props.setActiveItem('species');
+    }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => this.props.setActiveItem(name);
 
     render() {
-        const { activeItem } = this.state
 
         return (
             <Menu>
                 <Menu.Item
                     name='family'
-                    active={activeItem === 'family'}
+                    active={this.props.activeItem === 'family'}
                     onClick={this.handleItemClick}
                 />
                 <Menu.Item
                     name='genus'
-                    active={activeItem === 'genus'}
+                    active={this.props.activeItem === 'genus'}
                     onClick={this.handleItemClick}
                 />
                 <Menu.Item
                     name='plants'
-                    active={activeItem === 'plants'}
+                    active={this.props.activeItem === 'plants'}
                     onClick={this.handleItemClick}
                 />
                 <Menu.Item
                     name='species'
-                    active={activeItem === 'species'}
+                    active={this.props.activeItem === 'species'}
                     onClick={this.handleItemClick}
                 />
             </Menu>
@@ -38,4 +39,8 @@ class MyMenu extends React.Component {
     }
 }
 
-export default MyMenu;
+const mapStateToProps = (state) => {
+   return { activeItem: state.menu.activeItem } 
+}
+
+export default connect(mapStateToProps, { setActiveItem })(MyMenu);

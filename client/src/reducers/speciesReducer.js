@@ -7,10 +7,7 @@ export default (state = {}, action) => {
         case FETCH_SPECIES:
             return { ...state, ...action.payload }
         case ERROR:
-            return { 
-                ...state,
-                error: action.payload
-            }
+            return { ...state, error: action.payload }
         default:
             return state;
     }

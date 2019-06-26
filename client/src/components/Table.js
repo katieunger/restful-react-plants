@@ -15,8 +15,8 @@ class MyTable extends React.Component {
         console.log(this.props);
     }
 
-    renderPlants() {
-        console.log('in renderPlants')
+    renderSpecies() {
+        console.log('in renderSpecies')
         console.log(this.props);
         return this.props.data.map(obj => {
             return (
@@ -70,7 +70,7 @@ class MyTable extends React.Component {
                 </Table.Header>
     
                 <Table.Body>
-                    {this.renderPlants()}
+                    {this.renderSpecies()}
                 </Table.Body>
     
                 <Table.Footer>
