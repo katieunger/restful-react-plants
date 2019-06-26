@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { fetchSpecies } from '../actions';
 
 class MyTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
     componentDidMount() {
         this.props.fetchSpecies();
         console.log('componentDidMount');
@@ -22,6 +27,14 @@ class MyTable extends React.Component {
                 </Table.Row>
             );
         })
+    }
+
+    onChangePage(event, data) {
+        const clickedPage = data.activePage;
+        const activePage = this.props.activePage;
+        if (clickedPage !== activePage) {
+            this.props.fetchSpecies(clickedPage);
+        }
     }
     
     render() {
@@ -64,7 +77,9 @@ class MyTable extends React.Component {
                 <Table.Row>
                     <Table.HeaderCell colSpan='3'>
                         <Pagination
+                            defaultActivePage={1}
                             totalPages={this.props.totalPages}
+                            onPageChange={this.onChangePage}
                             ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
                             firstItem={{ content: <Icon name='angle double left' />, icon: true }}
                             lastItem={{ content: <Icon name='angle double right' />, icon: true }}
@@ -86,6 +101,7 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         data: state.species.data,
+        activePage: state.species.activePage,
         totalPages: state.species.totalPages,
         error: state.species.error
     };

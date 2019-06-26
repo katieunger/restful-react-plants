@@ -9,16 +9,20 @@ export const fetchPlants = () => async dispatch => {
     dispatch({ type: FETCH_PLANTS, payload: response.data });
 };
 
-export const fetchSpecies = () => async dispatch => {
+export const fetchSpecies = (page) => async dispatch => {
     try {
         const response = await trefle.get('/api/species', {
             params: {
                 complete_data: true,
-                //page: page
+                page: page
             }
         })
 
-        dispatch({ type: FETCH_SPECIES, payload: { data: response.data, totalPages: response.headers['total-pages'] }});
+        dispatch({ type: FETCH_SPECIES, payload: { 
+            data: response.data, 
+            totalPages: response.headers['total-pages'],
+            activePage: response.headers['page-number']
+        }});
     } catch(e) {
         dispatch({ type: ERROR, payload: e.message});
     }    
