@@ -1,11 +1,12 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { setActiveItem } from '../actions';
 
 class MyMenu extends React.Component {
     componentDidMount() {
-        this.props.setActiveItem('species');
+        //this.props.setActiveItem('species');
     }
 
     handleItemClick = (e, { name }) => this.props.setActiveItem(name);
@@ -28,11 +29,15 @@ class MyMenu extends React.Component {
                     name='plants'
                     active={this.props.activeItem === 'plants'}
                     onClick={this.handleItemClick}
+                    as={NavLink}
+                    to="/plants"
                 />
                 <Menu.Item
                     name='species'
                     active={this.props.activeItem === 'species'}
                     onClick={this.handleItemClick}
+                    as={NavLink}
+                    to="/species"
                 />
             </Menu>
         )

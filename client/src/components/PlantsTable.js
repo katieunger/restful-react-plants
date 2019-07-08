@@ -1,22 +1,22 @@
 import React from 'react';
 import { Icon, Table, Loader, Segment, Pagination, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { fetchSpecies } from '../actions';
+import { fetchPlants } from '../actions';
 
-class MyTable extends React.Component {
+class PlantsTable extends React.Component {
     constructor(props) {
         super(props);
         this.onChangePage = this.onChangePage.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchSpecies();
+        this.props.fetchPlants();
         console.log('componentDidMount');
         console.log(this.props);
     }
 
-    renderSpecies() {
-        console.log('in renderSpecies')
+    renderPlants() {
+        console.log('in renderPlants')
         console.log(this.props);
         return this.props.data.map(obj => {
             return (
@@ -33,7 +33,7 @@ class MyTable extends React.Component {
         const clickedPage = data.activePage;
         const activePage = this.props.activePage;
         if (clickedPage !== activePage) {
-            this.props.fetchSpecies(clickedPage);
+            this.props.fetchPlants(clickedPage);
         }
     }
     
@@ -70,7 +70,7 @@ class MyTable extends React.Component {
                 </Table.Header>
     
                 <Table.Body>
-                    {this.renderSpecies()}
+                    {this.renderPlants()}
                 </Table.Body>
     
                 <Table.Footer>
@@ -100,13 +100,13 @@ const mapStateToProps = (state) => {
     console.log('mapStateToProps');
     console.log(state);
     return {
-        data: state.species.data,
-        activePage: state.species.activePage,
-        totalPages: state.species.totalPages,
-        error: state.species.error
+        data: state.plants.data,
+        activePage: state.plants.activePage,
+        totalPages: state.plants.totalPages,
+        error: state.plants.error
     };
 };
 
-export default connect(mapStateToProps, { fetchSpecies })(MyTable);
+export default connect(mapStateToProps, { fetchPlants })(PlantsTable);
 
 
