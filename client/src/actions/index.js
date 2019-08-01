@@ -56,12 +56,13 @@ export const fetchGenus = (page) => async dispatch => {
     }    
 }
 
-export const fetchPlants = (page) => async dispatch => {
+export const fetchPlants = (page, query) => async dispatch => {
     try {
         const response = await trefle.get('/api/plants', {
             params: {
                 complete_data: true,
-                page: page
+                page: page,
+                q: query
             }
         })
 
