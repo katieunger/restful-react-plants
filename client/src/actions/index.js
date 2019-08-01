@@ -1,5 +1,15 @@
 import trefle from '../api/trefle';
-import { FETCH_PLANTS, FETCH_SPECIES, ERROR, SET_ACTIVE_ITEM } from './types';
+import { 
+    FETCH_GENUS,
+    FETCH_GENUS_ERROR,
+    FETCH_PLANTS,
+    FETCH_PLANTS_ERROR,
+    FETCH_SPECIES,
+    FETCH_SPECIES_ERROR,
+    SET_ACTIVE_ITEM,
+    FETCH_FAMILIES,
+    FETCH_FAMILIES_ERROR
+ } from './types';
 
 export const setActiveItem = (item) => {
     return {
@@ -7,6 +17,44 @@ export const setActiveItem = (item) => {
         payload: item
     };
 };
+
+export const fetchFamilies = (page) => async dispatch => {
+    try {
+        const response = await trefle.get('/api/families', {
+            params: {
+                complete_data: true,
+                page: page
+            }
+        })
+
+        dispatch({ type: FETCH_FAMILIES, payload: { 
+            data: response.data, 
+            totalPages: response.headers['total-pages'],
+            activePage: response.headers['page-number']
+        }});
+    } catch(e) {
+        dispatch({ type: FETCH_FAMILIES_ERROR, payload: e.message});
+    }    
+}
+
+export const fetchGenus = (page) => async dispatch => {
+    try {
+        const response = await trefle.get('/api/genuses', {
+            params: {
+                complete_data: true,
+                page: page
+            }
+        })
+
+        dispatch({ type: FETCH_GENUS, payload: { 
+            data: response.data, 
+            totalPages: response.headers['total-pages'],
+            activePage: response.headers['page-number']
+        }});
+    } catch(e) {
+        dispatch({ type: FETCH_GENUS_ERROR, payload: e.message});
+    }    
+}
 
 export const fetchPlants = (page) => async dispatch => {
     try {
@@ -23,7 +71,7 @@ export const fetchPlants = (page) => async dispatch => {
             activePage: response.headers['page-number']
         }});
     } catch(e) {
-        dispatch({ type: ERROR, payload: e.message});
+        dispatch({ type: FETCH_PLANTS_ERROR, payload: e.message});
     }    
 }
 
@@ -42,7 +90,7 @@ export const fetchSpecies = (page) => async dispatch => {
             activePage: response.headers['page-number']
         }});
     } catch(e) {
-        dispatch({ type: ERROR, payload: e.message});
+        dispatch({ type: FETCH_SPECIES_ERROR, payload: e.message});
     }    
 }
   

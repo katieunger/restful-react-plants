@@ -19,11 +19,15 @@ class MyMenu extends React.Component {
                     name='family'
                     active={this.props.activeItem === 'family'}
                     onClick={this.handleItemClick}
+                    as={NavLink}
+                    to="/families"
                 />
                 <Menu.Item
                     name='genus'
                     active={this.props.activeItem === 'genus'}
                     onClick={this.handleItemClick}
+                    as={NavLink}
+                    to="/genus"
                 />
                 <Menu.Item
                     name='plants'

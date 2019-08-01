@@ -1,41 +1,28 @@
 import React from 'react';
-import { Icon, Table, Loader, Segment, Pagination, Message, Image } from 'semantic-ui-react';
+import { Icon, Table, Loader, Segment, Pagination, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { fetchPlants } from '../actions';
+import { fetchFamilies } from '../actions';
 
-class PlantsTable extends React.Component {
+class FamiliesTable extends React.Component {
     constructor(props) {
         super(props);
         this.onChangePage = this.onChangePage.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchPlants();
+        this.props.fetchFamilies();
         console.log('componentDidMount');
         console.log(this.props);
     }
 
-    renderPlantImage(obj) {
-        console.log('in renderPlantImage')
-        console.log(obj);
-        if (!obj.images) {
-            return (
-                <Image src='#' size='medium' disabled>No Image Available</Image>
-            );
-        }
-
-        return <Image src={obj.images[0].url} size='medium' disabled>No Image Available</Image>
-    }
-
-    renderPlants() {
-        console.log('in renderPlants')
+    renderFamilies() {
+        console.log('in renderFamilies')
         console.log(this.props);
         return this.props.data.map(obj => {
             return (
                 <Table.Row key={obj.id}>
-                    <Table.Cell>{obj.scientific_name}</Table.Cell>
+                    <Table.Cell>{obj.name}</Table.Cell>
                     <Table.Cell>{obj.common_name}</Table.Cell>
-                    <Table.Cell>{this.renderPlantImage(obj)}</Table.Cell>
                 </Table.Row>
             );
         })
@@ -45,7 +32,7 @@ class PlantsTable extends React.Component {
         const clickedPage = data.activePage;
         const activePage = this.props.activePage;
         if (clickedPage !== activePage) {
-            this.props.fetchPlants(clickedPage);
+            this.props.fetchFamilies(clickedPage);
         }
     }
     
@@ -75,19 +62,18 @@ class PlantsTable extends React.Component {
             <Table celled>
                 <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell>Scientific Name</Table.HeaderCell>
+                    <Table.HeaderCell>Family Name</Table.HeaderCell>
                     <Table.HeaderCell>Common Name</Table.HeaderCell>
-                    <Table.HeaderCell>Image</Table.HeaderCell>
                 </Table.Row>
                 </Table.Header>
     
                 <Table.Body>
-                    {this.renderPlants()}
+                    {this.renderFamilies()}
                 </Table.Body>
     
                 <Table.Footer>
                 <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
+                    <Table.HeaderCell colSpan='2'>
                         <Pagination
                             defaultActivePage={1}
                             totalPages={this.props.totalPages}
@@ -112,13 +98,13 @@ const mapStateToProps = (state) => {
     console.log('mapStateToProps');
     console.log(state);
     return {
-        data: state.plants.data,
-        activePage: state.plants.activePage,
-        totalPages: state.plants.totalPages,
-        error: state.plants.error
+        data: state.families.data,
+        activePage: state.families.activePage,
+        totalPages: state.families.totalPages,
+        error: state.families.error
     };
 };
 
-export default connect(mapStateToProps, { fetchPlants })(PlantsTable);
+export default connect(mapStateToProps, { fetchFamilies })(FamiliesTable);
 
 
