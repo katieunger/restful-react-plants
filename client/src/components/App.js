@@ -3,11 +3,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container, Header } from 'semantic-ui-react';
 
 import './App.css';
+import MyMenu from './Menu';
+import SearchBar from './SearchBar';
 import SpeciesTable from './SpeciesTable';
 import PlantsTable from './PlantsTable';
 import GenusTable from './GenusTable';
 import FamiliesTable from './FamiliesTable';
-import MyMenu from './Menu';
+
 
 const App = () => {
     return (

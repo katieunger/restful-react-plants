@@ -8,7 +8,8 @@ import {
     FETCH_SPECIES_ERROR,
     SET_ACTIVE_ITEM,
     FETCH_FAMILIES,
-    FETCH_FAMILIES_ERROR
+    FETCH_FAMILIES_ERROR,
+    SET_QUERY
  } from './types';
 
 export const setActiveItem = (item) => {
@@ -17,6 +18,13 @@ export const setActiveItem = (item) => {
         payload: item
     };
 };
+
+export const setQuery = (query) => {
+    return {
+        type: SET_QUERY,
+        payload: query
+    }
+}
 
 export const fetchFamilies = (page) => async dispatch => {
     try {

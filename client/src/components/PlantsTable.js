@@ -1,7 +1,8 @@
 import React from 'react';
-import { Icon, Table, Loader, Segment, Pagination, Message, Image } from 'semantic-ui-react';
+import { Icon, Table, Loader, Segment, Pagination, Message, Image, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchPlants } from '../actions';
+import SearchBar from './SearchBar';
 
 class PlantsTable extends React.Component {
     constructor(props) {
@@ -23,11 +24,52 @@ class PlantsTable extends React.Component {
                 <Image src='#' size='medium' disabled>No Image Available</Image>
             );
         }
-
-        return <Image src={obj.images[0].url} size='medium' disabled>No Image Available</Image>
+        return <Image src={obj.images[0].url} size='medium'></Image>
     }
 
-    renderPlants() {
+    renderPlantsTable() {
+        return (
+            <Table celled>
+                {this.renderTableHeader()}
+    
+                <Table.Body>
+                    {this.renderTableBody()}
+                </Table.Body>
+    
+                <Table.Footer>
+                <Table.Row>
+                    <Table.HeaderCell colSpan='3'>
+                        <Pagination
+                            defaultActivePage={1}
+                            totalPages={this.props.totalPages}
+                            onPageChange={this.onChangePage}
+                            ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                            firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                            lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                            prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                            nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                        >
+                        </Pagination>
+                    </Table.HeaderCell>
+                </Table.Row>
+                </Table.Footer>
+            </Table>
+        );
+    }
+
+    renderTableHeader() {
+        return (
+            <Table.Header>
+            <Table.Row>
+                <Table.HeaderCell>Scientific Name</Table.HeaderCell>
+                <Table.HeaderCell>Common Name</Table.HeaderCell>
+                <Table.HeaderCell>Image</Table.HeaderCell>
+            </Table.Row>
+            </Table.Header>
+        );
+    }
+
+    renderTableBody() {
         console.log('in renderPlants')
         console.log(this.props);
         return this.props.data.map(obj => {
@@ -72,37 +114,10 @@ class PlantsTable extends React.Component {
             );
         }
         return (
-            <Table celled>
-                <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>Scientific Name</Table.HeaderCell>
-                    <Table.HeaderCell>Common Name</Table.HeaderCell>
-                    <Table.HeaderCell>Image</Table.HeaderCell>
-                </Table.Row>
-                </Table.Header>
-    
-                <Table.Body>
-                    {this.renderPlants()}
-                </Table.Body>
-    
-                <Table.Footer>
-                <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
-                        <Pagination
-                            defaultActivePage={1}
-                            totalPages={this.props.totalPages}
-                            onPageChange={this.onChangePage}
-                            ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
-                            firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-                            lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-                            prevItem={{ content: <Icon name='angle left' />, icon: true }}
-                            nextItem={{ content: <Icon name='angle right' />, icon: true }}
-                        >
-                        </Pagination>
-                    </Table.HeaderCell>
-                </Table.Row>
-                </Table.Footer>
-            </Table>
+            <Segment>
+                <SearchBar />
+                {this.renderPlantsTable()}
+            </Segment>
         );
     }
 
