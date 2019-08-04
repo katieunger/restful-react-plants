@@ -2,6 +2,8 @@ import trefle from '../api/trefle';
 import { 
     FETCH_GENUS,
     FETCH_GENUS_ERROR,
+    FETCH_PLANT,
+    FETCH_PLANT_ERROR,
     FETCH_PLANTS,
     FETCH_PLANTS_ERROR,
     FETCH_SPECIES,
@@ -82,6 +84,20 @@ export const fetchPlants = (page, query) => async dispatch => {
     } catch(e) {
         dispatch({ type: FETCH_PLANTS_ERROR, payload: e.message});
     }    
+}
+
+export const fetchPlant = (id) => async dispatch => {
+    try {
+        const response = await trefle.get(`/api/plants/${id}`)
+
+        dispatch({ type: FETCH_PLANT, payload: { 
+            data: response.data
+        }});
+    }
+
+    catch(e) {
+        dispatch({ type: FETCH_PLANT_ERROR, payload: e.message})
+    }
 }
 
 export const fetchSpecies = (page) => async dispatch => {

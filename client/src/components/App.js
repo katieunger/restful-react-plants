@@ -4,12 +4,11 @@ import { Container, Header } from 'semantic-ui-react';
 
 import './App.css';
 import MyMenu from './Menu';
-import SearchBar from './SearchBar';
 import SpeciesTable from './SpeciesTable';
 import PlantsTable from './PlantsTable';
+import PlantItem from './PlantItem';
 import GenusTable from './GenusTable';
 import FamiliesTable from './FamiliesTable';
-
 
 const App = () => {
     return (
@@ -22,6 +21,7 @@ const App = () => {
                         <Route path="/families" exact component={FamiliesTable}></Route>
                         <Route path="/genus" exact component={GenusTable}></Route>
                         <Route path="/plants" exact component={PlantsTable}></Route>
+                        <Route path="/plants/:id" exact component={PlantItem}></Route>
                         <Route path="/species" exact component={SpeciesTable}></Route>
                     </Switch>
                 </Container>

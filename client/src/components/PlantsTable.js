@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon, Table, Loader, Segment, Pagination, Message, Image, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchPlants } from '../actions';
@@ -16,16 +17,26 @@ class PlantsTable extends React.Component {
         console.log(this.props);
     }
 
-    renderPlantImage(obj) {
-        console.log('in renderPlantImage')
-        console.log(obj);
-        if (!obj.images) {
-            return (
-                <Image src='#' size='medium' disabled>No Image Available</Image>
-            );
+    // Helper function
+    formatCommonName(name) {
+        if (name) {
+            return name.replace(/\w\S*/g, function(str){
+                return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
+            }); 
         }
-        return <Image src={obj.images[0].url} size='medium'></Image>
+        return null;
     }
+
+    // renderPlantImage(obj) {
+    //     console.log('in renderPlantImage')
+    //     console.log(obj);
+    //     if (!obj.images) {
+    //         return (
+    //             <Image src='#' size='medium' disabled>No Image Available</Image>
+    //         );
+    //     }
+    //     return <Image src={obj.images[0].url} size='medium'></Image>
+    // }
 
     renderPlantsTable() {
         return (
@@ -38,7 +49,7 @@ class PlantsTable extends React.Component {
     
                 <Table.Footer>
                 <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
+                    <Table.HeaderCell colSpan='2'>
                         <Pagination
                             defaultActivePage={1}
                             totalPages={this.props.totalPages}
@@ -61,9 +72,8 @@ class PlantsTable extends React.Component {
         return (
             <Table.Header>
             <Table.Row>
-                <Table.HeaderCell>Scientific Name</Table.HeaderCell>
                 <Table.HeaderCell>Common Name</Table.HeaderCell>
-                <Table.HeaderCell>Image</Table.HeaderCell>
+                <Table.HeaderCell>Scientific Name</Table.HeaderCell>
             </Table.Row>
             </Table.Header>
         );
@@ -75,9 +85,12 @@ class PlantsTable extends React.Component {
         return this.props.data.map(obj => {
             return (
                 <Table.Row key={obj.id}>
+                    <Table.Cell>
+                        <Link to={`/plants/${obj.id}`}>
+                            {this.formatCommonName(obj.common_name)}
+                        </Link>
+                    </Table.Cell>
                     <Table.Cell>{obj.scientific_name}</Table.Cell>
-                    <Table.Cell>{obj.common_name}</Table.Cell>
-                    <Table.Cell>{this.renderPlantImage(obj)}</Table.Cell>
                 </Table.Row>
             );
         })
