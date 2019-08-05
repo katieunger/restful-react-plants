@@ -18,7 +18,7 @@ class SearchBar extends React.Component {
                 <Form>
                     <Form.Field>
                         <label>Search</label>
-                        <input name='search' onChange={this.onInputChange} />
+                        <input name='search' onChange={this.onInputChange} value={this.props.query} />
                     </Form.Field>
                     <Button type='submit' onClick={this.onClickSearch}>Search</Button>
                 </Form>

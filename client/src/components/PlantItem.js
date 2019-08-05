@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router';
-import { Button, Header, Image, Segment, Loader } from 'semantic-ui-react';
+import { Button, Header, Image, Segment, Loader, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchPlant } from '../actions';
 import { formatCommonName } from '../helpers';
 
+// Using Semantic UI modal and not Semantic UI Modal component for now
 class PlantItem extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,14 @@ class PlantItem extends React.Component {
         console.log('PlantItem onDismiss');
         console.log(this.props);
         this.props.history.push('/plants');
+    }
+
+    renderImage(data) {
+        if (data.images && data.images.length > 0) {
+            return (
+                <Image wrapped size='medium' src={data.images[0].url} />
+            );
+        }
     }
 
     render() {
@@ -48,9 +57,12 @@ class PlantItem extends React.Component {
                     onClick={e => e.stopPropagation()}
                     className="ui standard modal visible active"
                 >
-                    <div className="header">{formatCommonName(this.props.selectedPlant.data.common_name)}</div>
+                    <div className="ui header">
+                        {formatCommonName(this.props.selectedPlant.data.common_name)}
+                        <div className="sub header">{this.props.selectedPlant.data.scientific_name}</div>
+                    </div>
                     <div className="content">
-                        <p>Hi</p>
+                        {this.renderImage(this.props.selectedPlant.data)}
                     </div>
                 </div>
             </div>, 
