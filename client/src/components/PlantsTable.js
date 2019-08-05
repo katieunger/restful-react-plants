@@ -4,6 +4,7 @@ import { Icon, Table, Loader, Segment, Pagination, Message, Image, Form } from '
 import { connect } from 'react-redux';
 import { fetchPlants } from '../actions';
 import SearchBar from './SearchBar';
+import { formatCommonName } from '../helpers';
 
 class PlantsTable extends React.Component {
     constructor(props) {
@@ -17,15 +18,7 @@ class PlantsTable extends React.Component {
         console.log(this.props);
     }
 
-    // Helper function
-    formatCommonName(name) {
-        if (name) {
-            return name.replace(/\w\S*/g, function(str){
-                return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-            }); 
-        }
-        return null;
-    }
+
 
     // renderPlantImage(obj) {
     //     console.log('in renderPlantImage')
@@ -87,7 +80,7 @@ class PlantsTable extends React.Component {
                 <Table.Row key={obj.id}>
                     <Table.Cell>
                         <Link to={`/plants/${obj.id}`}>
-                            {this.formatCommonName(obj.common_name)}
+                            {formatCommonName(obj.common_name)}
                         </Link>
                     </Table.Cell>
                     <Table.Cell>{obj.scientific_name}</Table.Cell>
