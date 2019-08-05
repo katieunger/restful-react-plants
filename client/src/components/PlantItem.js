@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router';
-import { Button, Header, Image, Segment, Loader, Card } from 'semantic-ui-react';
+import { Button, Header, Image, Segment, Loader, Card, Item, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { fetchPlant } from '../actions';
 import { formatCommonName } from '../helpers';
@@ -30,9 +30,23 @@ class PlantItem extends React.Component {
     renderImage(data) {
         if (data.images && data.images.length > 0) {
             return (
-                <Image wrapped size='medium' src={data.images[0].url} />
+                <Image wrapped size='medium' src={data.images[0].url} as='a'/>
             );
         }
+    }
+
+    renderContent(data) {
+        return (
+            <Item>
+                <Item.Content>
+                    <Item.Header >{data.family_common_name}</Item.Header>
+                    <Item.Meta>{data.duration}</Item.Meta>
+                    <Item.Description>
+                    </Item.Description>
+                    <Item.Extra>Additional Details</Item.Extra>
+                </Item.Content>
+            </Item>
+        );
     }
 
     render() {
@@ -48,25 +62,28 @@ class PlantItem extends React.Component {
             );
         }
 
-        return ReactDOM.createPortal(
-            <div 
-            onClick={this.onDismiss} 
-            className="ui dimmer modals visible active"
-            >
-                <div 
-                    onClick={e => e.stopPropagation()}
-                    className="ui standard modal visible active"
+        return (
+        
+        // ReactDOM.createPortal(
+        //     <div 
+        //     onClick={this.onDismiss} 
+        //     className="ui dimmer modals visible active"
+        //     >
+                <Modal open
+                    //onClick={e => e.stopPropagation()}
+                    //className="ui standard modal visible active"
                 >
-                    <div className="ui header">
+                    <Modal.Header>
                         {formatCommonName(this.props.selectedPlant.data.common_name)}
                         <div className="sub header">{this.props.selectedPlant.data.scientific_name}</div>
-                    </div>
-                    <div className="content">
+                    </Modal.Header>
+                    <Modal.Content> 
                         {this.renderImage(this.props.selectedPlant.data)}
-                    </div>
-                </div>
-            </div>, 
-            document.querySelector("#modal")
+                        {this.renderContent(this.props.selectedPlant.data)}
+                    </Modal.Content>
+                </Modal>
+            // </div>, 
+            // document.querySelector("#modal")
         );
     }
 } 
