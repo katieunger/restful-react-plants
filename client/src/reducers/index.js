@@ -5,6 +5,7 @@ import plantsReducer from './plantsReducer';
 import speciesReducer from './speciesReducer';
 import menuReducer from './menuReducer';
 import searchReducer from './searchReducer';
+import modalReducer from './modalReducer';
 
 export default combineReducers({
     families: familiesReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     plants: plantsReducer,
     species: speciesReducer,
     menu: menuReducer,
-    search: searchReducer
+    search: searchReducer,
+    modal: modalReducer
 });

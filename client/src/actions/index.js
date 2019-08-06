@@ -11,7 +11,9 @@ import {
     SET_ACTIVE_ITEM,
     FETCH_FAMILIES,
     FETCH_FAMILIES_ERROR,
-    SET_QUERY
+    SET_QUERY,
+    MODAL_OPEN,
+    MODAL_CLOSE
  } from './types';
 
 export const setActiveItem = (item) => {
@@ -25,6 +27,20 @@ export const setQuery = (query) => {
     return {
         type: SET_QUERY,
         payload: query
+    }
+}
+
+export const openModal = (modalProps) => {
+    return {
+        type: MODAL_OPEN,
+        payload: modalProps
+    }
+}
+
+export const closeModal = (modalProps) => {
+    return {
+        type: MODAL_CLOSE,
+        payload: modalProps
     }
 }
 

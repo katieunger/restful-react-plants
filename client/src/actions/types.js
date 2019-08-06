@@ -10,3 +10,5 @@ export const FETCH_SPECIES = 'FETCH_SPECIES';
 export const FETCH_SPECIES_ERROR = 'FETCH_SPECIES_ERROR';
 export const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM';
 export const SET_QUERY = 'SET_QUERY';
+export const MODAL_OPEN = 'MODAL_OPEN';
+export const MODAL_CLOSE = 'MODAL_CLOSE';

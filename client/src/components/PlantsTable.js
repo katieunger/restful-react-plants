@@ -121,7 +121,7 @@ class PlantsTable extends React.Component {
         }
         return (
             <Segment>
-                <SearchBar query={this.props.query}/>
+                <SearchBar query={this.props.search.query}/>
                 {this.renderPlantsTable()}
             </Segment>
         );
@@ -136,7 +136,8 @@ const mapStateToProps = (state) => {
         data: state.plants.data,
         activePage: state.plants.activePage,
         totalPages: state.plants.totalPages,
-        error: state.plants.error
+        error: state.plants.error,
+        search: state.search
     };
 };
 
