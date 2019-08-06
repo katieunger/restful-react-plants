@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router';
 import { Button, Header, Image, Segment, Loader, Card, Item, Modal, HeaderSubheader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { fetchPlant, openModal, closeModal } from '../actions';
+import { fetchPlant, openModal, closeModal, unsetPlant } from '../actions';
 import { formatCommonName } from '../helpers';
 
-// Using Semantic UI modal and not Semantic UI Modal component for now
 class PlantItem extends React.Component {
     constructor(props) {
         super(props);
         console.log('PlantItem constructor');
         console.log(this.props);
-        //this.onDismiss = this.onDismiss.bind(this);
     }
 
     componentDidMount() {
@@ -26,11 +24,10 @@ class PlantItem extends React.Component {
         console.log(this.props);
     }
 
-    // onDismiss() {
-    //     console.log('PlantItem onDismiss');
-    //     console.log(this.props);
-    //     this.props.history.push('/plants');
-    // }
+    componentWillUnmount() {
+        this.props.unsetPlant();
+    }
+
     open = () => {
         this.props.openModal(true);
     };
@@ -65,40 +62,33 @@ class PlantItem extends React.Component {
     render() {
         if (!this.props.selectedPlant) {
             return (
-                <React.Fragment>
-                <Segment>
-                    <Loader active>
-                        Loading...
-                    </Loader>
-                </Segment>
-                </React.Fragment>
+                <Modal
+                open={this.props.modal.open}
+                onClose={this.close}
+                >
+                    <Modal.Content>
+                        <Loader active>
+                            Loading...
+                        </Loader>
+                    </Modal.Content>
+                </Modal>
             );
         }
 
         return (
-        
-        // ReactDOM.createPortal(
-        //     <div 
-        //     onClick={this.onDismiss} 
-        //     className="ui dimmer modals visible active"
-        //     >
-                <Modal 
-                    open={this.props.modal.open}
-                    onClose={this.close}
-                    //onClick={e => e.stopPropagation()}
-                    //className="ui standard modal visible active"
-                >
-                    <Modal.Header>
-                        {formatCommonName(this.props.selectedPlant.data.common_name)}
-                        <HeaderSubheader>{this.props.selectedPlant.data.scientific_name}</HeaderSubheader>
-                    </Modal.Header>
-                    <Modal.Content> 
-                        {this.renderImage(this.props.selectedPlant.data)}
-                        {this.renderContent(this.props.selectedPlant.data)}
-                    </Modal.Content>
-                </Modal>
-            // </div>, 
-            // document.querySelector("#modal")
+            <Modal 
+                open={this.props.modal.open}
+                onClose={this.close}
+            >
+                <Modal.Header>
+                    {formatCommonName(this.props.selectedPlant.data.common_name)}
+                    <HeaderSubheader>{this.props.selectedPlant.data.scientific_name}</HeaderSubheader>
+                </Modal.Header>
+                <Modal.Content> 
+                    {this.renderImage(this.props.selectedPlant.data)}
+                    {this.renderContent(this.props.selectedPlant.data)}
+                </Modal.Content>
+            </Modal>
         );
     }
 } 
@@ -109,8 +99,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         modal: state.modal,
         selectedPlant: state.plants.selectedPlant,
-        //history: ownProps.history
     }
 };
   
-export default withRouter(connect(mapStateToProps, { fetchPlant, openModal, closeModal })(PlantItem));
+export default withRouter(connect(mapStateToProps, { fetchPlant, openModal, closeModal, unsetPlant })(PlantItem));

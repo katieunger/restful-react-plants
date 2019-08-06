@@ -6,6 +6,7 @@ import {
     FETCH_PLANT_ERROR,
     FETCH_PLANTS,
     FETCH_PLANTS_ERROR,
+    UNSET_PLANT,
     FETCH_SPECIES,
     FETCH_SPECIES_ERROR,
     SET_ACTIVE_ITEM,
@@ -113,6 +114,12 @@ export const fetchPlant = (id) => async dispatch => {
 
     catch(e) {
         dispatch({ type: FETCH_PLANT_ERROR, payload: e.message})
+    }
+}
+
+export const unsetPlant = () => {
+    return {
+        type: UNSET_PLANT
     }
 }
 
