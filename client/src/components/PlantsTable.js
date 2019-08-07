@@ -121,7 +121,6 @@ class PlantsTable extends React.Component {
         }
         return (
             <Segment>
-                <SearchBar query={this.props.search.query}/>
                 {this.renderPlantsTable()}
             </Segment>
         );

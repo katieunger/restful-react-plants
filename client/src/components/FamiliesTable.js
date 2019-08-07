@@ -101,7 +101,8 @@ const mapStateToProps = (state) => {
         data: state.families.data,
         activePage: state.families.activePage,
         totalPages: state.families.totalPages,
-        error: state.families.error
+        error: state.families.error,
+        search: state.search
     };
 };
 

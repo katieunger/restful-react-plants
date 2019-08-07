@@ -3,12 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container, Header } from 'semantic-ui-react';
 
 import './App.css';
+import SearchBar from './SearchBar';
 import MyMenu from './Menu';
 import SpeciesTable from './SpeciesTable';
 import PlantsTable from './PlantsTable';
 import PlantItem from './PlantItem';
 import GenusTable from './GenusTable';
 import FamiliesTable from './FamiliesTable';
+
 
 const App = () => {
     return (
@@ -17,6 +19,7 @@ const App = () => {
                 <Container className="main">
                     <Header as='h1'>My Plants</Header>
                     <MyMenu />
+                    <SearchBar />
                     <Switch>
                         <Route path="/families" exact component={FamiliesTable}></Route>
                         <Route path="/genus" exact component={GenusTable}></Route>

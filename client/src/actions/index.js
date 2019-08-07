@@ -45,12 +45,13 @@ export const closeModal = (modalProps) => {
     }
 }
 
-export const fetchFamilies = (page) => async dispatch => {
+export const fetchFamilies = (page, query) => async dispatch => {
     try {
         const response = await trefle.get('/api/families', {
             params: {
                 complete_data: true,
-                page: page
+                page: page,
+                q: query
             }
         })
 
@@ -64,12 +65,13 @@ export const fetchFamilies = (page) => async dispatch => {
     }    
 }
 
-export const fetchGenus = (page) => async dispatch => {
+export const fetchGenus = (page, query) => async dispatch => {
     try {
         const response = await trefle.get('/api/genuses', {
             params: {
                 complete_data: true,
-                page: page
+                page: page,
+                q: query
             }
         })
 
@@ -123,12 +125,13 @@ export const unsetPlant = () => {
     }
 }
 
-export const fetchSpecies = (page) => async dispatch => {
+export const fetchSpecies = (page, query) => async dispatch => {
     try {
         const response = await trefle.get('/api/species', {
             params: {
                 complete_data: true,
-                page: page
+                page: page,
+                q: query
             }
         })
 

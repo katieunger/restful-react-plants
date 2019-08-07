@@ -1,7 +1,7 @@
 import React from 'react';
-import { Segment, Form, Button } from 'semantic-ui-react';
+import { Segment, Form, Button, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { setQuery, fetchPlants } from '../actions';
+import { setQuery, fetchFamilies, fetchGenus, fetchPlants, fetchSpecies } from '../actions';
 
 class SearchBar extends React.Component {
     onInputChange = (event) => {
@@ -9,20 +9,32 @@ class SearchBar extends React.Component {
     }
 
     onClickSearch = () => {
-        this.props.fetchPlants(1, this.props.query);
+        switch (this.props.activeItem) {
+            case 'family':
+                console.log('Family search');
+                return this.props.fetchFamilies(1, this.props.query);
+            case 'genus':
+                console.log('Genus search');
+                return this.props.fetchGenus(1, this.props.query);
+            case 'plants':
+                console.log('Plants search');
+                return this.props.fetchPlants(1, this.props.query);
+            case 'species':
+                console.log('Species search');
+                return this.props.fetchSpecies(1, this.props.query);
+        }
     }
 
     render() {
         return (
-            <Segment>
-                <Form>
-                    <Form.Field>
-                        <label>Search</label>
-                        <input name='search' onChange={this.onInputChange} value={this.props.query} />
-                    </Form.Field>
-                    <Button type='submit' onClick={this.onClickSearch}>Search</Button>
-                </Form>
-            </Segment>
+            <Input
+                label={<Button type='submit' onClick={this.onClickSearch}>Search</Button>}
+                labelPosition='right'
+                //placeholder='Enter name to search...'
+                name='search'
+                onChange={this.onInputChange}
+                value={this.props.query}
+            />
         );
     }
 }
@@ -31,9 +43,10 @@ const mapStateToProps = (state) => {
     console.log('mapStateToProps');
     console.log(state);
     return {
+        activeItem: state.menu.activeItem,
         query: state.search.query
     }
 };
 
 
-export default connect(mapStateToProps, { setQuery, fetchPlants })(SearchBar);
+export default connect(mapStateToProps, { setQuery, fetchFamilies, fetchGenus, fetchPlants, fetchSpecies })(SearchBar);
